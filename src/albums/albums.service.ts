@@ -11,8 +11,9 @@ export class AlbumsService {
   constructor(
     private albumsRepository: AlbumsRepository,
     @Inject(TracksRepository) private tracksRepository: TracksRepository,
-    @Inject(FavoritesRepository) private favoriteRepository: FavoritesRepository,
-  ) { }
+    @Inject(FavoritesRepository)
+    private favoriteRepository: FavoritesRepository,
+  ) {}
 
   async create(createAlbumDto: CreateAlbumDto): Promise<Album> {
     return this.albumsRepository.create(createAlbumDto);

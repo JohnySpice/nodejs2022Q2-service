@@ -12,7 +12,11 @@ import {
 } from './controllers';
 
 @Module({
-  imports: [forwardRef(() => TracksModule), forwardRef(() => AlbumsModule), forwardRef(() => ArtistsModule),],
+  imports: [
+    forwardRef(() => TracksModule),
+    forwardRef(() => AlbumsModule),
+    forwardRef(() => ArtistsModule),
+  ],
   controllers: [
     FavoritesController,
     FavoritesTrackController,
@@ -20,6 +24,6 @@ import {
     FavoritesAlbumController,
   ],
   providers: [FavoritesService, FavoritesService, FavoritesRepository],
-  exports: [FavoritesRepository]
+  exports: [FavoritesRepository],
 })
-export class FavoritesModule { }
+export class FavoritesModule {}

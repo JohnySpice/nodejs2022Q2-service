@@ -7,7 +7,11 @@ import { TracksRepository } from './repository/tracks.repository';
 
 @Injectable()
 export class TracksService {
-  constructor(private tracksRepository: TracksRepository, @Inject(FavoritesRepository) private favoriteRepository: FavoritesRepository,) { }
+  constructor(
+    private tracksRepository: TracksRepository,
+    @Inject(FavoritesRepository)
+    private favoriteRepository: FavoritesRepository,
+  ) {}
 
   create(createTrackDto: CreateTrackDto) {
     return this.tracksRepository.create(createTrackDto);

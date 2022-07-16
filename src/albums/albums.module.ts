@@ -11,4 +11,4 @@ import { FavoritesModule } from 'src/favorites/favorites.module';
   providers: [AlbumsService, AlbumsRepository],
   exports: [AlbumsRepository],
 })
-export class AlbumsModule { }
+export class AlbumsModule {}
