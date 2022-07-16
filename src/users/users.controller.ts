@@ -40,9 +40,9 @@ export class UserController {
   @Put(':id')
   update(
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() UpdateUserPasswordDto: UpdateUserPasswordDto,
+    @Body() updateUserPasswordDto: UpdateUserPasswordDto,
   ): Promise<User> {
-    return this.userService.update(id, UpdateUserPasswordDto);
+    return this.userService.update(id, updateUserPasswordDto);
   }
 
   @Delete(':id')
