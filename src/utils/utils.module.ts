@@ -4,6 +4,6 @@ import { ArtistExistsRule } from './artist-exist.validator';
 
 @Module({
   imports: [ArtistsModule],
-  providers: [ArtistExistsRule]
+  providers: [ArtistExistsRule],
 })
-export class UtilsModule { }
+export class UtilsModule {}
