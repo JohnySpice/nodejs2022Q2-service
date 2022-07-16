@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { AlbumsRepository } from 'src/albums/repository/allbums.repository';
+import { FavoritesRepository } from 'src/favorites/repository/favorites.repository';
 import { TracksRepository } from 'src/tracks/repository/tracks.repository';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
@@ -12,7 +13,8 @@ export class ArtistsService {
     private artistsRepository: ArtistsRepository,
     @Inject(TracksRepository) private tracksRepository: TracksRepository,
     @Inject(AlbumsRepository) private albumsRepository: AlbumsRepository,
-  ) {}
+    @Inject(FavoritesRepository) private favoriteRepository: FavoritesRepository,
+  ) { }
 
   async create(createArtistDto: CreateArtistDto): Promise<Artist> {
     return this.artistsRepository.create(createArtistDto);
@@ -37,6 +39,7 @@ export class ArtistsService {
     }
     this.tracksRepository.removeArtist(id);
     this.albumsRepository.removeArtist(id);
+    this.favoriteRepository.removeArtist(id);
     return result;
   }
 }
