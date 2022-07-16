@@ -1,7 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
-import "dotenv/config";
-import { ClassSerializerInterceptor, Logger, ValidationPipe } from '@nestjs/common';
+import 'dotenv/config';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const PORT = process.env.PORT || 4000;

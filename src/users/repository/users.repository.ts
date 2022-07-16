@@ -1,4 +1,3 @@
-
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserPasswordDto } from '../dto/update-user-password.dto';
@@ -9,7 +8,7 @@ export class UsersRepository {
   private _storage: User[] = [];
 
   _findById(id: string) {
-    return this._storage.findIndex(user => user.id === id);
+    return this._storage.findIndex((user) => user.id === id);
   }
   find(): User[] {
     return this._storage;
@@ -25,16 +24,22 @@ export class UsersRepository {
     return newUser;
   }
 
-  findByIdAndUpdate(id: string, updateUserPasswordDto: UpdateUserPasswordDto): User {
+  findByIdAndUpdate(
+    id: string,
+    updateUserPasswordDto: UpdateUserPasswordDto,
+  ): User {
     const user = this._storage[this._findById(id)];
     if (!user) {
       return;
     }
     if (user.password !== updateUserPasswordDto.oldPassword) {
-      throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
-        error: 'oldPassowrd is incorrect',
-      }, HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'oldPassowrd is incorrect',
+        },
+        HttpStatus.FORBIDDEN,
+      );
     }
     user.password = updateUserPasswordDto.newPassword;
     user.version++;

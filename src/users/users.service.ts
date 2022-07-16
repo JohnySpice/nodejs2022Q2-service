@@ -6,7 +6,7 @@ import { UsersRepository } from './repository/users.repository';
 
 @Injectable()
 export class UserService {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     return this.usersRepository.create(createUserDto);
@@ -20,7 +20,10 @@ export class UserService {
     return this.usersRepository.findById(id);
   }
 
-  async update(id: string, updateUserPasswordDto: UpdateUserPasswordDto): Promise<User> {
+  async update(
+    id: string,
+    updateUserPasswordDto: UpdateUserPasswordDto,
+  ): Promise<User> {
     return this.usersRepository.findByIdAndUpdate(id, updateUserPasswordDto);
   }
 

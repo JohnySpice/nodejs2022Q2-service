@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseUUIDPipe, UseInterceptors, Put, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  ParseUUIDPipe,
+  UseInterceptors,
+  Put,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { UserService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
@@ -8,7 +20,7 @@ import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
 @Controller('user')
 @UseInterceptors(NotFoundInterceptor)
 export class UserController {
-  constructor(private readonly userService: UserService) { }
+  constructor(private readonly userService: UserService) {}
 
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -26,7 +38,10 @@ export class UserController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() UpdateUserPasswordDto: UpdateUserPasswordDto): Promise<User> {
+  update(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() UpdateUserPasswordDto: UpdateUserPasswordDto,
+  ): Promise<User> {
     return this.userService.update(id, UpdateUserPasswordDto);
   }
 
