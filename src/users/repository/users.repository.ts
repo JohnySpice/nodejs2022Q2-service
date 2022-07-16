@@ -7,7 +7,7 @@ import { User } from '../entities/user.entity';
 export class UsersRepository {
   private _storage: User[] = [];
 
-  _findById(id: string) {
+  private _findById(id: string) {
     return this._storage.findIndex((user) => user.id === id);
   }
   find(): User[] {
