@@ -5,6 +5,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { ArtistExists } from 'src/utils/artist-exist.validator';
 
 export class CreateTrackDto {
   @IsString()
@@ -12,6 +13,7 @@ export class CreateTrackDto {
   name: string;
   @IsUUID()
   @IsOptional()
+  @ArtistExists()
   artistId: string | null;
   @IsUUID()
   @IsOptional()
