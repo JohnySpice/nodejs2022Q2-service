@@ -5,7 +5,8 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { ArtistExists } from 'src/utils/artist-exist.validator';
+import { AlbumExists } from 'src/utils';
+import { ArtistExists } from 'src/utils';
 
 export class CreateTrackDto {
   @IsString()
@@ -17,6 +18,7 @@ export class CreateTrackDto {
   artistId: string | null;
   @IsUUID()
   @IsOptional()
+  @AlbumExists()
   albumId: string | null;
   @IsNumber()
   duration: number;

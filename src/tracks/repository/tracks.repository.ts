@@ -55,4 +55,15 @@ export class TracksRepository {
     }
     return tracks;
   }
+
+  removeAlbum(id: string) {
+    const tracks = this._storage.filter((track) => track.albumId === id);
+    if (!tracks.length) {
+      return;
+    }
+    for (const track of tracks) {
+      track.albumId = null;
+    }
+    return tracks;
+  }
 }
