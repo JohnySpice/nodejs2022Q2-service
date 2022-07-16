@@ -12,7 +12,7 @@ export class ArtistsService {
     private artistsRepository: ArtistsRepository,
     @Inject(TracksRepository) private tracksRepository: TracksRepository,
     @Inject(AlbumsRepository) private albumsRepository: AlbumsRepository,
-  ) { }
+  ) {}
 
   async create(createArtistDto: CreateArtistDto): Promise<Artist> {
     return this.artistsRepository.create(createArtistDto);

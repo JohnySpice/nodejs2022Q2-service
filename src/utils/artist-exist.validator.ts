@@ -13,7 +13,7 @@ import { ArtistsRepository } from 'src/artists/repository/artists.repository';
 export class ArtistExistsRule implements ValidatorConstraintInterface {
   constructor(
     @Inject(ArtistsRepository) private artistsRepository: ArtistsRepository,
-  ) { }
+  ) {}
 
   async validate(id: string) {
     const artist = this.artistsRepository.findById(id);

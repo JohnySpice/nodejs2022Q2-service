@@ -7,4 +7,4 @@ import { ArtistExistsRule } from './artist-exist.validator';
   imports: [ArtistsModule],
   providers: [ArtistExistsRule],
 })
-export class UtilsModule { }
+export class UtilsModule {}

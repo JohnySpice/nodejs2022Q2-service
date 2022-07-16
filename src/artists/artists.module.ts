@@ -11,4 +11,4 @@ import { AlbumsModule } from 'src/albums/albums.module';
   providers: [ArtistsService, ArtistsRepository],
   exports: [ArtistsRepository],
 })
-export class ArtistsModule { }
+export class ArtistsModule {}
