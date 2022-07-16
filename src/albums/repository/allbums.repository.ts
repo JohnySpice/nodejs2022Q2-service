@@ -44,4 +44,15 @@ export class AlbumsRepository {
     }
     return this._storage.splice(albumObjectId, 1);
   }
+
+  removeArtist(id: string) {
+    const albums = this._storage.filter((album) => album.artistId === id);
+    if (!albums.length) {
+      return;
+    }
+    for (const album of albums) {
+      album.artistId = null;
+    }
+    return albums;
+  }
 }
