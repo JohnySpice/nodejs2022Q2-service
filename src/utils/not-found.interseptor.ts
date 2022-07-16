@@ -11,7 +11,6 @@ import { Observable, tap } from 'rxjs';
 export class NotFoundInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     {
-      // next.handle() is an Observable of the controller's result value
       return next.handle().pipe(
         tap((data) => {
           if (data === undefined) throw new NotFoundException();
