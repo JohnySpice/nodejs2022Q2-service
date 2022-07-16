@@ -1,0 +1,33 @@
+import { Inject, Injectable } from '@nestjs/common';
+import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments, registerDecorator, ValidationOptions } from 'class-validator';
+import { ArtistsRepository } from 'src/artists/repository/artists.repository';
+
+@ValidatorConstraint({ name: 'ArtistExists', async: true })
+@Injectable()
+export class ArtistExistsRule implements ValidatorConstraintInterface {
+  constructor(@Inject(ArtistsRepository) private artistsRepository: ArtistsRepository) { }
+
+  async validate(id: string) {
+    const artist = this.artistsRepository.findById(id);
+    if (!artist) {
+      return false;
+    }
+    return true;
+  }
+
+  defaultMessage(args: ValidationArguments) {
+    return `Artist doesn't exist`;
+  }
+}
+
+export function UserExists(validationOptions?: ValidationOptions) {
+  return function (object: any, propertyName: string) {
+    registerDecorator({
+      name: 'UserExists',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      validator: ArtistExistsRule,
+    });
+  };
+}
