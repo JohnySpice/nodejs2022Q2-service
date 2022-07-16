@@ -6,5 +6,6 @@ import { TracksRepository } from './repository/tracks.repository';
 @Module({
   controllers: [TracksController],
   providers: [TracksService, TracksRepository],
+  exports: [TracksRepository],
 })
 export class TracksModule {}

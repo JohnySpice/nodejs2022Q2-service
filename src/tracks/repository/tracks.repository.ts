@@ -8,7 +8,7 @@ export class TracksRepository {
   private _storage: Track[] = [];
 
   private _findById(id: string) {
-    return this._storage.findIndex((artist) => artist.id === id);
+    return this._storage.findIndex((track) => track.id === id);
   }
   find(): Track[] {
     return this._storage;
@@ -43,5 +43,16 @@ export class TracksRepository {
       return;
     }
     return this._storage.splice(trackObjectId, 1);
+  }
+
+  removeArtist(id: string) {
+    const tracks = this._storage.filter((track) => track.artistId === id);
+    if (!tracks.length) {
+      return;
+    }
+    for (const track of tracks) {
+      track.artistId = null;
+    }
+    return tracks;
   }
 }
