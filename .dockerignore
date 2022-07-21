@@ -1,0 +1,12 @@
+.vscode
+node_modules
+dist
+coverage
+test
+env-example
+README.md
+*d.ts
+*.spec.ts
+dockerfile
+.*
+doc
