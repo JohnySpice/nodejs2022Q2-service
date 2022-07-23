@@ -1,0 +1,54 @@
+services:
+  app:
+    build:
+      target: dev
+      context: .
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    networks:
+      - backend
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+    ports:
+      - $PORT:$PORT
+    links:
+      - db
+    volumes:
+      - ./:/app
+    command: npm run start:dev
+  db:
+    build: tools/db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    networks:
+      - backend
+    volumes:
+      - ./database:/var/lib/postgresql/data
+#  adminer:
+#    build: tools/db/adminer
+#    networks:
+#      - frontend
+#      - backend
+#    restart: always
+#    ports:
+#      - 8080:8080
+
+networks:
+  frontend:
+    driver: bridge
+    internal: true
+  backend:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1
