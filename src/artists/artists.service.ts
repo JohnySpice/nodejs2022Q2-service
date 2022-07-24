@@ -1,7 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FavoritesRepository } from 'src/favorites/repository/favorites.repository';
-import { TracksRepository } from 'src/tracks/repository/tracks.repository';
 import { Repository } from 'typeorm';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
@@ -41,9 +39,5 @@ export class ArtistsService {
   async remove(id: string) {
     const result = await this.artistsRepository.delete({ id });
     return result.affected ? result.raw : null;
-    // this.tracksRepository.removeArtist(id);
-    // this.albumsRepository.removeArtist(id);
-    // this.favoriteRepository.removeArtist(id);
-    // return result;
   }
 }

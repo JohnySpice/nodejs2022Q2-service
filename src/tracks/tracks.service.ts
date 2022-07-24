@@ -1,40 +1,43 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { FavoritesRepository } from 'src/favorites/repository/favorites.repository';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { Track } from './entities/track.entity';
-import { TracksRepository } from './repository/tracks.repository';
 
 @Injectable()
 export class TracksService {
   constructor(
-    private tracksRepository: TracksRepository,
-    @Inject(FavoritesRepository)
-    private favoriteRepository: FavoritesRepository,
-  ) {}
+    @InjectRepository(Track) private tracksRepository: Repository<Track>,
+  ) { }
 
-  create(createTrackDto: CreateTrackDto) {
-    return this.tracksRepository.create(createTrackDto);
+  async create(createTrackDto: CreateTrackDto) {
+    const track = this.tracksRepository.create(createTrackDto);
+    return this.tracksRepository.save(track);
   }
 
   async findAll(): Promise<Track[]> {
-    return this.tracksRepository.find();
+    return this.tracksRepository.find({ loadRelationIds: true });
   }
 
   async findOne(id: string): Promise<Track> {
-    return this.tracksRepository.findById(id);
+    return this.tracksRepository.findOne({ where: { id }, loadRelationIds: true });
   }
 
   async update(id: string, updateTrackDto: UpdateTrackDto): Promise<Track> {
-    return this.tracksRepository.findByIdAndUpdate(id, updateTrackDto);
+    const track: Track = await this.findOne(id);
+    if (!track) {
+      return track;
+    }
+    await this.tracksRepository.save({
+      id: id,
+      ...updateTrackDto,
+    });
+    return this.findOne(id);
   }
 
   async remove(id: string) {
-    const result = this.tracksRepository.deleteOne(id);
-    if (!result) {
-      return;
-    }
-    this.favoriteRepository.removeTrack(id);
-    return result;
+    const result = await this.tracksRepository.delete({ id });
+    return result.affected ? result.raw : null;
   }
 }
