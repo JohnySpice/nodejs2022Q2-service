@@ -1,13 +1,13 @@
-import { v4 } from 'uuid';
-import { CreateArtistDto } from '../dto/create-artist.dto';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('artists')
 export class Artist {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column()
   name: string;
+
+  @Column()
   grammy: boolean;
-  constructor({ name, grammy }: CreateArtistDto) {
-    this.id = v4();
-    this.name = name;
-    this.grammy = grammy;
-  }
 }

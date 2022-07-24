@@ -1,43 +1,43 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { FavoritesRepository } from 'src/favorites/repository/favorites.repository';
-import { TracksRepository } from 'src/tracks/repository/tracks.repository';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 import { Album } from './entities/album.entity';
-import { AlbumsRepository } from './repository/allbums.repository';
 
 @Injectable()
 export class AlbumsService {
   constructor(
-    private albumsRepository: AlbumsRepository,
-    @Inject(TracksRepository) private tracksRepository: TracksRepository,
-    @Inject(FavoritesRepository)
-    private favoriteRepository: FavoritesRepository,
-  ) {}
+    @InjectRepository(Album) private albumsRepository: Repository<Album>,
+  ) { }
 
   async create(createAlbumDto: CreateAlbumDto): Promise<Album> {
-    return this.albumsRepository.create(createAlbumDto);
+    const album = this.albumsRepository.create(createAlbumDto);
+    return this.albumsRepository.save(album);
   }
 
   async findAll(): Promise<Album[]> {
-    return this.albumsRepository.find();
+    return this.albumsRepository.find({ loadRelationIds: true });
   }
 
   async findOne(id: string): Promise<Album> {
-    return this.albumsRepository.findById(id);
+    return this.albumsRepository.findOne({ where: { id }, loadRelationIds: true });
   }
 
   async update(id: string, updateAlbumDto: UpdateAlbumDto): Promise<Album> {
-    return this.albumsRepository.findByIdAndUpdate(id, updateAlbumDto);
+    const album: Album = await this.findOne(id);
+    if (!album) {
+      return album;
+    }
+    await this.albumsRepository.save({
+      id: id,
+      ...updateAlbumDto,
+    });
+    return this.findOne(id);
   }
 
   async remove(id: string) {
-    const result = this.albumsRepository.deleteOne(id);
-    if (!result) {
-      return;
-    }
-    this.tracksRepository.removeAlbum(id);
-    this.favoriteRepository.removeAlbum(id);
-    return result;
+    const result = await this.albumsRepository.delete({ id });
+    return result.affected ? result.raw : null;
   }
 }

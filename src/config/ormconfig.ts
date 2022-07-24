@@ -11,7 +11,7 @@ export default {
   database: process.env.POSTGRES_DB,
   synchronize: false,
   migrationsRun: false,
-  entities: [resolve(__dirname, '../users/entities/user.entity.{js,ts}')],
+  entities: [resolve(__dirname, '../**/entities/*.entity.{js,ts}')],
   migrations: [resolve(__dirname, '../migrations/*.{ts,js}')],
   logging: true,
   logger: 'file',
