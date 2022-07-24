@@ -18,7 +18,14 @@
     "test:auth": "cross-env TEST_MODE=auth jest --config ./test/jest-e2e.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "scan": "docker scan nodejs2022q2-service_app_1",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli",
+    "typeorm:cli": "npm run typeorm -- -d src/config/ormconfig-migrations.ts",
+    "generate": "npm run typeorm:cli -- migration:generate src/migrations/CreateEntities",
+    "create": "npm run typeorm -- migration:create src/migrations/CreateDB",
+    "run": "npm run typeorm:cli -- migration:run",
+    "reset": "npm run typeorm:cli -- schema:drop && npm run typeorm:cli -- schema:sync"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
@@ -34,7 +41,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "typeorm": "^0.3.7"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
