@@ -7,6 +7,6 @@ export class FavoritesController {
 
   @Get()
   getAll() {
-    return this.favoritesService.getAll();
+    return this.favoritesService.getAllFormated();
   }
 }

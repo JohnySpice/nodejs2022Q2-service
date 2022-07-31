@@ -9,7 +9,7 @@ import { Artist } from './entities/artist.entity';
 export class ArtistsService {
   constructor(
     @InjectRepository(Artist) private artistsRepository: Repository<Artist>,
-  ) { }
+  ) {}
 
   async create(createArtistDto: CreateArtistDto): Promise<Artist> {
     const artist = await this.artistsRepository.create(createArtistDto);

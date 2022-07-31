@@ -1,20 +1,17 @@
 import {
   PipeTransform,
   Injectable,
-  Inject,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { TracksRepository } from 'src/tracks/repository/tracks.repository';
+import { TracksService } from 'src/tracks/tracks.service';
 
 @Injectable()
 export class TrackValidationPipe implements PipeTransform {
-  constructor(
-    @Inject(TracksRepository) private tracksRepository: TracksRepository,
-  ) {}
+  constructor(private tracksService: TracksService) {}
 
-  transform(id: string) {
-    const track = this.tracksRepository.findById(id);
+  async transform(id: string) {
+    const track = await this.tracksService.findOne(id);
     if (!track) {
       throw new HttpException(
         {
@@ -24,6 +21,6 @@ export class TrackValidationPipe implements PipeTransform {
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    return id;
+    return track;
   }
 }

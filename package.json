@@ -19,12 +19,12 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "scan": "docker scan nodejs2022q2-service_app_1",
+    "scan": "docker scan nodejs2022q2-service_app",
     "typeorm:cli": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli -d src/config/ormconfig-migrations.ts",
-    "generate": "npm run typeorm:cli -- migration:generate",
-    "create": "npm run typeorm:cli -- migration:create",
-    "run": "npm run typeorm:cli -- migration:run",
-    "reset": "npm run typeorm:cli -- schema:drop && npm run typeorm:cli -- schema:sync"
+    "generateMigration": "npm run typeorm:cli -- migration:generate src/migrations/CreateEntities",
+    "createMigration": "npm run typeorm:cli -- migration:create",
+    "runMigration": "npm run typeorm:cli -- migration:run",
+    "resetDB": "npm run typeorm:cli -- schema:drop && npm run typeorm:cli -- schema:sync"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",

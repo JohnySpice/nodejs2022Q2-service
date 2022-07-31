@@ -14,5 +14,6 @@ import { Album } from './entities/album.entity';
   ],
   controllers: [AlbumsController],
   providers: [AlbumsService],
+  exports: [AlbumsService],
 })
 export class AlbumsModule {}

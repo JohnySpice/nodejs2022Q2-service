@@ -1,29 +1,28 @@
 import {
   PipeTransform,
   Injectable,
-  Inject,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
-import { ArtistsRepository } from 'src/artists/repository/artists.repository';
-
+import { ArtistsService } from 'src/artists/artists.service';
 @Injectable()
 export class ArtistValidationPipe implements PipeTransform {
   constructor(
-    @Inject(ArtistsRepository) private artistsRepository: ArtistsRepository,
+    // @InjectRepository(Artist) private artistsRepository: Repository<Artist>,
+    private artistService: ArtistsService,
   ) {}
 
-  transform(id: string) {
-    const artist = this.artistsRepository.findById(id);
+  async transform(id: string) {
+    const artist = await this.artistService.findOne(id);
     if (!artist) {
       throw new HttpException(
         {
           status: HttpStatus.UNPROCESSABLE_ENTITY,
-          error: `Artist doesn\'t exist`,
+          error: `Artist not found`,
         },
         HttpStatus.UNPROCESSABLE_ENTITY,
       );
     }
-    return id;
+    return artist;
   }
 }

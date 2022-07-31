@@ -9,7 +9,7 @@ import { Track } from './entities/track.entity';
 export class TracksService {
   constructor(
     @InjectRepository(Track) private tracksRepository: Repository<Track>,
-  ) { }
+  ) {}
 
   async create(createTrackDto: CreateTrackDto) {
     const track = this.tracksRepository.create(createTrackDto);
@@ -21,7 +21,10 @@ export class TracksService {
   }
 
   async findOne(id: string): Promise<Track> {
-    return this.tracksRepository.findOne({ where: { id }, loadRelationIds: true });
+    return this.tracksRepository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
   }
 
   async update(id: string, updateTrackDto: UpdateTrackDto): Promise<Track> {

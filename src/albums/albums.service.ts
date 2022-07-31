@@ -9,7 +9,7 @@ import { Album } from './entities/album.entity';
 export class AlbumsService {
   constructor(
     @InjectRepository(Album) private albumsRepository: Repository<Album>,
-  ) { }
+  ) {}
 
   async create(createAlbumDto: CreateAlbumDto): Promise<Album> {
     const album = this.albumsRepository.create(createAlbumDto);
@@ -21,7 +21,10 @@ export class AlbumsService {
   }
 
   async findOne(id: string): Promise<Album> {
-    return this.albumsRepository.findOne({ where: { id }, loadRelationIds: true });
+    return this.albumsRepository.findOne({
+      where: { id },
+      loadRelationIds: true,
+    });
   }
 
   async update(id: string, updateAlbumDto: UpdateAlbumDto): Promise<Album> {
