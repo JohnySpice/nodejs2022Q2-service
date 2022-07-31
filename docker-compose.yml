@@ -1,9 +1,9 @@
 services:
   app:
-    build:
-      target: dev
-      context: .
-      dockerfile: Dockerfile
+    build: .
+    volumes:
+      - ./:/app
+      - /app/node_modules
     restart: on-failure
     env_file:
       - .env
@@ -17,9 +17,8 @@ services:
       - $PORT:$PORT
     links:
       - db
-    volumes:
-      - ./:/app
-    command: npm run start:dev
+    command: npm run start:dev && npm run runMigration
+
   db:
     build: tools/db
     restart: always
@@ -32,19 +31,18 @@ services:
       - backend
     volumes:
       - ./database:/var/lib/postgresql/data
-#  adminer:
-#    build: tools/db/adminer
-#    networks:
-#      - frontend
-#      - backend
-#    restart: always
-#    ports:
-#      - 8080:8080
+    ports:
+      - 5432:5432
+
+  adminer:
+    build: tools/db/adminer
+    networks:
+      - backend
+    restart: always
+    ports:
+      - 8080:8080
 
 networks:
-  frontend:
-    driver: bridge
-    internal: true
   backend:
     driver: bridge
     ipam:
