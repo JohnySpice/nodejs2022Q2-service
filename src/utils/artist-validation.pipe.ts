@@ -8,7 +8,6 @@ import { ArtistsService } from 'src/artists/artists.service';
 @Injectable()
 export class ArtistValidationPipe implements PipeTransform {
   constructor(
-    // @InjectRepository(Artist) private artistsRepository: Repository<Artist>,
     private artistService: ArtistsService,
   ) {}
 

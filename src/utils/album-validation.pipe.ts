@@ -9,13 +9,11 @@ import { AlbumsService } from 'src/albums/albums.service';
 @Injectable()
 export class AlbumValidationPipe implements PipeTransform {
   constructor(
-    // @InjectRepository(Album) private albumsRepository: Repository<Album>,
     private albumService: AlbumsService,
   ) {}
 
   async transform(id: string) {
     const album = await this.albumService.findOne(id);
-    console.dir(album);
     if (!album) {
       throw new HttpException(
         {
