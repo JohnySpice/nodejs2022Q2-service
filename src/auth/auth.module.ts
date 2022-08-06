@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtRTAuthGuard } from './jwt-rt-auth.guard';
+import { JwtRTStrategy } from './jwt-rt.strategy';
 import { JwtStrategy } from './jwt.strategy';
 
 @Module({
@@ -13,6 +15,6 @@ import { JwtStrategy } from './jwt.strategy';
     signOptions: { expiresIn: process.env.TOKEN_EXPIRE_TIME },
   }),],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy]
+  providers: [AuthService, JwtStrategy, JwtRTStrategy]
 })
 export class AuthModule { }
