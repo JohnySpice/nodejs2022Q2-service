@@ -10,16 +10,19 @@ import {
   ParseUUIDPipe,
   UseInterceptors,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { TracksService } from './tracks.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
 import { NotFoundInterceptor } from 'src/utils/not-found.interseptor';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('track')
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(NotFoundInterceptor)
 export class TracksController {
-  constructor(private readonly tracksService: TracksService) {}
+  constructor(private readonly tracksService: TracksService) { }
 
   @Post()
   create(@Body() createTrackDto: CreateTrackDto) {

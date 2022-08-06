@@ -7,16 +7,19 @@ import {
   HttpCode,
   HttpStatus,
   SetMetadata,
+  UseGuards,
 } from '@nestjs/common';
 import { Artist } from 'src/artists/entities/artist.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ArtistValidationPipe } from 'src/utils';
 import { ArtistInFavoriteValidationPipe } from 'src/utils';
 import { Repository } from 'typeorm';
 import { FavoritesService } from '../favorites.service';
 
 @Controller('favs/artist')
+@UseGuards(JwtAuthGuard)
 export class FavoritsArtistController {
-  constructor(private readonly favoritesService: FavoritesService) {}
+  constructor(private readonly favoritesService: FavoritesService) { }
 
   @Post(':id')
   @SetMetadata('entity', Repository<Artist>)

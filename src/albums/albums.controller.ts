@@ -10,16 +10,19 @@ import {
   ParseUUIDPipe,
   UseInterceptors,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { NotFoundInterceptor } from 'src/utils/not-found.interseptor';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
 
 @Controller('album')
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(NotFoundInterceptor)
 export class AlbumsController {
-  constructor(private readonly albumsService: AlbumsService) {}
+  constructor(private readonly albumsService: AlbumsService) { }
 
   @Post()
   create(@Body() createAlbumDto: CreateAlbumDto) {
