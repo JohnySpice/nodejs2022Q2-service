@@ -1,8 +1,15 @@
-import { ConsoleLogger, Injectable } from '@nestjs/common';
+import { ConsoleLogger, Injectable, LogLevel } from '@nestjs/common';
 import { createWriteStream, existsSync, mkdirSync, WriteStream } from 'fs';
 import { stat } from 'fs/promises';
 import { resolve } from 'path';
 
+const LOG_LEVEL_VALUES: Record<number, LogLevel> = {
+  0: 'debug',
+  1: 'verbose',
+  2: 'log',
+  3: 'warn',
+  4: 'error',
+};
 @Injectable()
 export class LoggerService extends ConsoleLogger {
   private _logFileName: string;
@@ -11,7 +18,7 @@ export class LoggerService extends ConsoleLogger {
   private _queue: string[] = [];
   private _writeStream: WriteStream;
   constructor() {
-    super();
+    super('', { logLevels: [LOG_LEVEL_VALUES[parseInt(process.env.LOG_LEVEL)]] });
     this._logsDir = resolve(process.env.LOG_PATH);
     this._createDir();
     this._logFileName = 'log_1.txt';
@@ -22,7 +29,7 @@ export class LoggerService extends ConsoleLogger {
   }
   error(message: any, stack?: string, context?: string) {
     this._queue.push(message);
-    super.error(message, context);
+    super.error(message);
   }
   log(message: any, context?: string): void {
     this._queue.push(message);
@@ -33,6 +40,11 @@ export class LoggerService extends ConsoleLogger {
     this._queue.push(message);
     super.warn(message, context);
   }
+  debug(message: any, context?: string): void {
+    this._queue.push(message);
+    super.warn(message, context);
+  }
+
 
   private _setInterval() {
     setInterval(() => {
