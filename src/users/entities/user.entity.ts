@@ -1,25 +1,40 @@
+import {
+  Column,
+  ColumnOptions,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  VersionColumn,
+} from 'typeorm';
 import { Exclude } from 'class-transformer';
-import { IsNotEmpty, IsUUID } from 'class-validator';
-import { v4 } from 'uuid';
-import { CreateUserDto } from '../dto/create-user.dto';
 
+const dateColumnsOptions = {
+  type: 'timestamp',
+  transformer: {
+    from: (value: Date) => Date.parse(value.toISOString()),
+    to: (value) => value,
+  },
+} as ColumnOptions;
+
+@Entity('users')
 export class User {
-  @IsUUID()
-  @IsNotEmpty()
-  id: string; // uuid v4
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
   login: string;
+
+  @Column()
   @Exclude()
   password: string;
-  version: number; // integer number, increments on update
-  createdAt: number; // timestamp of creation
-  updatedAt: number; // timestamp of last update
 
-  constructor({ login, password }: CreateUserDto) {
-    this.id = v4();
-    this.login = login;
-    this.password = password;
-    this.version = 1;
-    this.createdAt = Date.now();
-    this.updatedAt = Date.now();
-  }
+  @VersionColumn()
+  version: number;
+
+  @CreateDateColumn(dateColumnsOptions)
+  createdAt: number;
+
+  @UpdateDateColumn(dateColumnsOptions)
+  updatedAt: number;
 }

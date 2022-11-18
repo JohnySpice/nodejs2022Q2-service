@@ -17,7 +17,7 @@ services:
       - $PORT:$PORT
     links:
       - db
-    command: [sh, -c, "cd /app && npm run start:dev"]
+    command: [sh, -c, "cd /app && npm run runMigration && npm run start:dev"]
 
   db:
     build: tools/db
@@ -40,6 +40,7 @@ services:
       - backend
     restart: always
     ports:
+
       - $DB_ADMINER_PORT:$DB_ADMINER_PORT
 
 networks:

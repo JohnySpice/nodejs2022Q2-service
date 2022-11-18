@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AlbumsModule } from 'src/albums/albums.module';
 import { ArtistsModule } from 'src/artists/artists.module';
-import { AlbumExistsRule } from './album-exist.validator';
-import { ArtistExistsRule } from './artist-exist.validator';
+import { TracksModule } from 'src/tracks/tracks.module';
 
 @Module({
-  imports: [ArtistsModule, AlbumsModule],
-  providers: [ArtistExistsRule, AlbumExistsRule],
+  imports: [AlbumsModule, ArtistsModule, TracksModule],
 })
 export class UtilsModule {}

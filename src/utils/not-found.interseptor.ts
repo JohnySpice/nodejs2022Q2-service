@@ -13,7 +13,7 @@ export class NotFoundInterceptor implements NestInterceptor {
     {
       return next.handle().pipe(
         tap((data) => {
-          if (data === undefined) throw new NotFoundException();
+          if (!data) throw new NotFoundException();
         }),
       );
     }
