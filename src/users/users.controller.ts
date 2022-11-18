@@ -10,17 +10,20 @@ import {
   Put,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
 import { NotFoundInterceptor } from 'src/utils/not-found.interseptor';
 import { UpdateUserPasswordDto } from './dto/update-user-password.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('user')
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(NotFoundInterceptor)
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
