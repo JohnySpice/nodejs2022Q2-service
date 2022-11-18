@@ -8,27 +8,25 @@
 ## Downloading
 
 ```
-git clone {repository URL}
+git clone git@github.com:JohnySpice/nodejs2022Q2-service.git
 ```
 
-## Installing NPM modules
-
+## Installing docker
 ```
-npm install
+https://docs.docker.com/get-docker/
 ```
-
 ## Running application
+Rename .env-example to .env
 
 ```
-npm start
+docker-compose up -d --build
 ```
 
-After starting the app on port (4000 as default) you can use
-endpoints described [here](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/rest-service/assignment.md)
+After building containers, will start migration for creating db entites and starting app
 
 ## Testing
 
-After application running open new terminal and enter:
+After application running you can start tests inside app container (connect to container in interctive mode) or install node_modules (npm install) localy and start tests.
 
 To run all tests without authorization
 
@@ -63,9 +61,3 @@ npm run lint
 ```
 npm run format
 ```
-
-### Debugging in VSCode
-
-Press <kbd>F5</kbd> to debug.
-
-For more information, visit: https://code.visualstudio.com/docs/editor/debugging
