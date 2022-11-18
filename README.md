@@ -18,6 +18,7 @@ https://docs.docker.com/get-docker/
 ```
 
 ## Running application
+Rename .env-example to .env
 
 Rename .env-example to .env or add .env file with corresponding values
 

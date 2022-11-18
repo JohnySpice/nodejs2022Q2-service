@@ -32,7 +32,7 @@ services:
     volumes:
       - ./database:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - $POSTGRES_PORT:$POSTGRES_PORT
 
   adminer:
     build: tools/db/adminer
@@ -40,7 +40,8 @@ services:
       - backend
     restart: always
     ports:
-      - 8080:8080
+
+      - $DB_ADMINER_PORT:$DB_ADMINER_PORT
 
 networks:
   backend:
