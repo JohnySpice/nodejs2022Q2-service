@@ -12,11 +12,17 @@ git clone git@github.com:JohnySpice/nodejs2022Q2-service.git
 ```
 
 ## Installing docker
+
 ```
 https://docs.docker.com/get-docker/
 ```
+
 ## Running application
 Rename .env-example to .env
+
+Rename .env-example to .env or add .env file with corresponding values
+
+Type in terminal
 
 ```
 docker-compose up -d --build
